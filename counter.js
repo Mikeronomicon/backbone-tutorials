@@ -11,9 +11,11 @@ var CounterView = Backbone.View.extend({
     }
 });
 
+//this is tacky, and I don't like it.
+var counterModel, counterView;
 $(document).ready( function () {
 
-var counterModel = new Counter();
+counterModel = new Counter();
 
 var counterView = new CounterView({model : counterModel});
 counterView.render();
