@@ -6,9 +6,10 @@ var Counter = Backbone.Model.extend({
 var CounterView = Backbone.View.extend({
     render: function () {
         var val = this.model.get("value");
-        var dec = '<button id="dec">Decrement</button>'
+        var dec = '<button id="dec">Decrement</button>';
+        var clr = '<button id="clr">Clear</button>';
         var btn = '<button id="btn">Increment</button>';
-        this.$el.html('<p>'+val+'</p>' + btn + dec);
+        this.$el.html('<p>'+val+'</p>' + btn + dec + clr);
     }
 });
 
@@ -38,6 +39,11 @@ counterView.$el.on("click", "#dec", function () {
     if (currVal === 0) {
         mod.set("value",currVal);
     }
+});
+
+counterView.$el.on("click", "#clr", function () {
+    var mod = counterView.model;
+    mod.set("value", 0);
 });
 
 $("#counterdiv").append(counterView.$el);

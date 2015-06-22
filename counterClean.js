@@ -25,8 +25,6 @@ var CounterView = Backbone.View.extend({
     }
 });
 
-
-
 $(document).ready( function () {
   var counterModel1 = new Counter();
   var counterModel2 = new Counter();
