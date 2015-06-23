@@ -2,18 +2,21 @@
 $(document).ready( function () {
 
 var TextModel = Backbone.Model.extend({
-    defaults : {"value" : ""},
+    defaults : {"value" : "0", "count" : 0},
     replace : function (str) {
       this.set("value", str);
+      var count = this.get("count");
+      this.set("count", count + 1);
     }
 });
 
 var TextView = Backbone.View.extend({
     render: function () {
         var textVal = this.model.get("value");
-        var btn = '<button>Clear</button>';
+        var count = this.model.get("count");
+        var btn = '<button id="clr">Clear</button>';
         var input = '<input type="text" value="' + textVal + '" />';
-        this.$el.html(textVal+"<br><div>" + input + btn +"</div>");
+        this.$el.html(textVal+"<br><div>" + input + btn + count +"</div>");
     },
     initialize: function () {
         this.model.on("change", this.render, this);
@@ -21,17 +24,17 @@ var TextView = Backbone.View.extend({
         // 'this' means the view, not the model
     },
     events : {
-        "click button" : "clear",
+        "click button" : "clear", 
         "keypress input" : "updateOnEnter",
     },
     replace : function () {
         var str = this.$el.find("input").val();
         this.model.replace(str);
     },
-    clear: function () {
+    clear : function () {
         this.model.replace("");
     },
-    updateOnEnter: function (e){
+    updateOnEnter : function (e) {
         if(e.keyCode == 13) {
             this.replace();
         }
