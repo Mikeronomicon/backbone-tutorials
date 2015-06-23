@@ -13,7 +13,7 @@ var TextView = Backbone.View.extend({
         var textVal = this.model.get("value");
         var btn = '<button>Clear</button>';
         var input = '<input type="text" value="' + textVal + '" />';
-        this.$el.html(textVal+"<br><div>" + input + btn + "</div>");
+        this.$el.html(textVal+"<br><div>" + input + btn +"</div>");
     },
     initialize: function () {
         this.model.on("change", this.render, this);
@@ -22,7 +22,7 @@ var TextView = Backbone.View.extend({
     },
     events : {
         "click button" : "clear",
-        "keypress input" : "updateOnEnter"
+        "keypress input" : "updateOnEnter",
     },
     replace : function () {
         var str = this.$el.find("input").val();
@@ -45,14 +45,16 @@ var TextCollection = Backbone.Collection.extend({
 var TextCollectionView = Backbone.View.extend({
     render : function () {
         var btn = '<button id="addbutton">Add Text</button>';
+        var del = '<button id="deletebutton">Delete</button>';
         var div = '<div id="text-list"></div>';
-        this.$el.html(div + btn);
+        this.$el.html(div + btn + del);
     },
     initialize : function () {
         this.listenTo(this.collection, 'add', this.addView);
     },
     events : {
-        "click #addbutton" : "addModel"
+        "click #addbutton" : "addModel",
+        "click #deletebutton" : "removeModel",
     },
     addModel : function () {
         this.collection.add({});
@@ -63,6 +65,12 @@ var TextCollectionView = Backbone.View.extend({
         var view = new TextView({model : newModel});
         view.render();
         this.$("#text-list").append(view.$el);
+    },
+    removeModel : function () {
+        this.collection.remove({});
+    },
+    removeView : function () {
+        
     },
 });
 
