@@ -2,11 +2,14 @@
 $(document).ready( function () {
 
 var TextModel = Backbone.Model.extend({
-    defaults : {"value" : "0", "count" : 0},
+    defaults : {"value" : "0", "count" : 0, "lastVal" : ""},
     replace : function (str) {
       this.set("value", str);
       var count = this.get("count");
-      this.set("count", count + 1);
+      var currText = this.get("value");
+      if (currText !== this.get("lastVal")) {
+        this.set("count", count + 1);
+      } 
     }
 });
 
@@ -32,6 +35,7 @@ var TextView = Backbone.View.extend({
         this.model.replace(str);
     },
     clear : function () {
+        this.model.set("lastVal", this.model.get("value"));
         this.model.replace("");
     },
     updateOnEnter : function (e) {
